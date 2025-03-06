@@ -45,15 +45,12 @@ Future<Response> _loginHandler(Request request) async {
     return Response.internalServerError(
       body : jsonEncode({'sucess': false, 'error': erro.toString()}));
   } finally {
-      if (conn != null) {
-        await conn.close();
-      }
+      await conn.close();
   }
 }
 
 Future<Response> _registerHandler(Request request) async {
   final conn = await getConnection();
-
   try {
     final payload = jsonDecode(await request.readAsString());
     final email = payload('email');
@@ -74,15 +71,9 @@ Future<Response> _registerHandler(Request request) async {
     return Response.internalServerError(
         body : jsonEncode({'sucess': false, 'error': erro.toString()}));
   } finally {
-    if (conn != null) {
-      await conn.close();
-    }
+    await conn.close();
   }
 }
-
-
-
-
 
 void main() async {
   final router = Router()
